@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      background: url('./背景.jpg') no-repeat center;
+      background-size: 2150px 1400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-y: hidden;
+    }
+
+    .container {
+      width: 1200px;
+      height: 800px;
+      position: relative;
+    }
+
+    #chicken {
+      width: 600px;
+      height: 600px;
+      left: 750px;
+      top: 250px;
+      position: relative;
+    }
+
+    #smallchicken {
+      left: 1300px;
+      bottom: 500px;
+      position: absolute;
+      display: none;
+
+    }
+
+    #aaa {
+      position: absolute;
+      left: 196px;
+      top: 905px;
+    }
+
+    #hour {
+      width: 25px;
+      height: 9px;
+      background-color: rgb(0, 0, 0);
+      border-radius: 5px;
+      position: absolute;
+      left: 824px;
+      bottom: 332px;
+      transform-origin: right center;
+    }
+
+    #minute {
+      width: 35px;
+      height: 8px;
+      background-color: rgba(121, 107, 24, 0.801);
+      border-radius: 5px;
+      position: absolute;
+      left: 813px;
+      bottom: 335px;
+      transform-origin: right center;
+    }
+
+    #second {
+      width: 45px;
+      height: 4px;
+      background-color: rgba(121, 106, 24, 0.322);
+      border-radius: 5px;
+      position: absolute;
+      left: 801px;
+      bottom: 334px;
+      transform-origin: right center;
+    }
+
+    #text {
+      width: 200px;
+      height: 80px;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 80px;
+      border: 3px dashed #14499f;
+      border-radius: 10px;
+      left: 150px;
+      bottom: 80px;
+      position: relative;
+      background: rgba(114, 216, 203, 0.758);
+      font-size: 36px;
+      font-style: italic;
+      font-family: 'Fredoka One', sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div id="clock">
+      <img id="chicken" src="./雞.png">
+      <img id="smallchicken" src="./小小雞.png" alt="小小雞">
+      <div id="aaa">
+        <div id="hour"></div>
+        <div id="minute"></div>
+        <div id="second"></div>
+      </div>
+    </div>
+  </div>
+  <p id="text">00:00:00</p>
+
+  <audio id="chickenSound" src="./chicken.m4a" preload="auto"></audio>
+
+  <script>
+    const elHour = document.getElementById('hour')
+    const elMinute = document.getElementById('minute')
+    const elSecond = document.getElementById('second')
+    const elText = document.getElementById('text')
+    const elChicken = document.getElementById('chicken')
+    const elchickenSound = document.getElementById('chickenSound')
+
+    const background = () => {
+      const date = new Date();
+      const hours = date.getHours();
+
+      if (hours >= 12 && hours <= 13) {
+        document.body.style.background = "url('./早上.jpg') no-repeat center";
+      } else {
+        document.body.style.background = "url('./晚上.jpg') no-repeat center";
+      }
+    }
+
+    const clock = () => {
+      const date = new Date()
+      const h = date.getHours()
+      const m = date.getMinutes()
+      const s = date.getSeconds()
+
+      elHour.style.transform = `rotate(${h * 30 + 90}deg)`
+      elMinute.style.transform = `rotate(${m * 6 + 90}deg)`
+      elSecond.style.transform = `rotate(${s * 6 + 90}deg)`
+      elText.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
+    }
+
+    setInterval(clock, 1000)
+    clock()
+
+    document.getElementById('clock').addEventListener('click', () => {
+      const date = new Date();
+      const h = date.getHours();
+      const m = date.getMinutes();
+      const s = date.getSeconds();
+      alert(`☆現在的時間是 ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}唷！☆`);
+
+      chickenSound.play();
+
+      smallchicken.style.display = 'block';
+      setTimeout(() => {
+        smallchicken.style.display = 'none';
+      }, 3000)
+
+
+
+      setTimeout(() => {
+        chickenSound.pause();
+        chickenSound.currentTime = 0;
+      }, 3000);
+
+    });
+  </script>
+</body>
+
+</html>
